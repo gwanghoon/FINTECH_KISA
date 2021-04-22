@@ -2,7 +2,7 @@ var mysql      = require('mysql');
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
-  password : 'sjm1771033',
+  password : 'root',
   database : 'fintech'
 });
  
