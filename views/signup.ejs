@@ -314,10 +314,10 @@
     <script src="js/global.script.js"></script>
     <script>
       $("#authBtn").click(function () {
-        var apiKey = "4e1719d3-5bc9-47c7-9316-851c72c85038"
+        var apiKey = "b6eb3d18-65e2-4929-82aa-54c4783b57fc"
         //#자기 키로 변경
         var tmpWindow = window.open("about:blank");
-        tmpWindow.location = "https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id="+apiKey+"&redirect_uri=http://localhost:3000/authResult&scope=login inquiry transfer&state=12345678901234567890123456789012&auth_type=0"
+        tmpWindow.location = "https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id="+apiKey+"&redirect_uri=http://localhost:8080/authResult&scope=login inquiry transfer&state=12345678901234567890123456789012&auth_type=0"
 
       });
       $("#signupBtn").click(function () {

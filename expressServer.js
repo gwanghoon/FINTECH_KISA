@@ -6,7 +6,7 @@ var jwt = require('jsonwebtoken');
 var auth = require('./lib/auth')
 var moment = require('moment');
 
-var companyId = "M202111570U"
+var companyId = "M202112062"
 require('dotenv').config();
 
 // json 타입에 데이터 전송을 허용한다.
@@ -28,11 +28,16 @@ var connection = mysql.createConnection({
   password : '7912102f',
   database : 'heroku_b2e3e1681c45173'
 });
- 
+
 connection.connect();
- 
-app.get('/', function (req, res) {
-  res.send('Hello World')
+connection.query('SELECT * FROM user', function (error, results, fields) {
+	console.log('hoon 테스트');
+    console.log(results);
+});
+
+
+app.get('/', function (req, res) {	
+    res.render('success');
 })
 
 app.get('/authTest',auth,function(req,res){
@@ -287,7 +292,6 @@ app.post('/signup',function(req,res){
     }
   });
 })
- 
 
 // 인증 후 code를 받는 url
 app.get('/authResult',function(req,res){
@@ -300,9 +304,9 @@ app.get('/authResult',function(req,res){
       },
       form : {
         code : authCode,
-        client_id : "4e1719d3-5bc9-47c7-9316-851c72c85038",
+        client_id : "b6eb3d18-65e2-4929-82aa-54c4783b57fc",
         client_secret : process.env.client_secret,
-        redirect_uri : "http://localhost:3000/authResult",
+        redirect_uri : "http://localhost:8080/authResult",
         grant_type : "authorization_code"
       }
   }
