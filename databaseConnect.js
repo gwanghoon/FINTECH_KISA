@@ -8,6 +8,9 @@ var connection = mysql.createConnection({
  
 connection.connect();
  
+console.log('connect ok');
+
+
 connection.query('SELECT * FROM user', function (error, results, fields) {
     console.log(results);
 });
