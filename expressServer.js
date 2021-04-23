@@ -26,7 +26,8 @@ var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : 'root',
-  database : 'fintech'
+  database : 'fintech',
+  dateStrings: 'date'
 });
 
 connection.connect();
@@ -69,7 +70,8 @@ app.post('/login',function(req,res){
       }
       else {
           if(result.length == 0){
-              res.json(3)
+	 		//res.json('사용자가 없습니다.');
+             res.json(3);
           }
           else {
               var dbPassword = result[0].password;
@@ -92,9 +94,13 @@ app.post('/login',function(req,res){
                     }
                   )            
               }
+				else if(dbPassword != userPassword) {
+                res.json('패스워드가 다릅니다');
+            }
+/*
               else {
                   res.json(2);
-              }
+              }*/
           }
       }
   })
@@ -282,7 +288,7 @@ app.post('/signup',function(req,res){
   var userRefreshToken = req.body.userRefreshToken;
   var userSeqNo = req.body.userSeqNo;
 
-  var sql = "INSERT INTO user (name, email, password, accesstoken, refreshtoken, userseqno) VALUES (?,?,?,?,?,?)";
+  var sql = "INSERT INTO user (name, email, password, accesstoken, refreshtoken, userseqno, create_time) VALUES (?,?,?,?,?,?,NOW())";
   connection.query(sql,[userName, userEmail, userPassword, userAccessToken, userRefreshToken, userSeqNo], function(error,results){
     if(error){
       console.error(error);

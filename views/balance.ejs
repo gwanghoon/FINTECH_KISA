@@ -278,7 +278,7 @@
       var qs = getQueryStringObject();
       var jwtToken = sessionStorage.getItem("ourtoken");
       $.ajax({
-        url: "http://localhost:8080/balance",
+        url: "http://localhost:3000/balance",
         type: "POST",
         headers: {
           ourtoken: jwtToken,
@@ -294,7 +294,7 @@
 
       $.ajax({
         //   #transactionlist url 에 데이터 요청 requestBody : finusenum / header token
-        url: "http://localhost:8080/transactionList",
+        url: "http://localhost:3000/transactionList",
         type: "POST",
         headers: {
           ourtoken: jwtToken,

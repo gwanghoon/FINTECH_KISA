@@ -117,7 +117,7 @@
 					<div class="form-row-group with-icons">
 						<div class="form-row no-padding">
 							<i class="fa fa-envelope"></i>
-							<input type="email" id="userEmail" name="aaa" class="form-element" placeholder="Username or Email">
+							<input type="email" id="userEmail" name="aaa" class="form-element" placeholder="Email">
 						</div>
 						<div class="form-row no-padding">
 							<i class="fa fa-lock"></i>
@@ -158,6 +158,16 @@
 	<script src="js/global.script.js"></script>
     <script>
 	$("#loginBtn").click(function(){
+		if($("#userEmail").val()==""){
+			alert("이메일을 입력해주세요.");
+			$("#userEmail").focus();
+			return;
+		}
+		if($("#userPassword").val()==""){
+			alert("비밀번호를 입력해주세요.");
+			$("#userPassword").focus();
+			return;
+		}
 		var userEmail = $("#userEmail").val();
 		var userPassword = $("#userPassword").val();
 			$.ajax({
@@ -168,12 +178,19 @@
          		   userPassword: userPassword,
           		},
           		success: function (data) {
-					console.log('우리의 토큰', data);
-    				sessionStorage.setItem('ourtoken', data);
-					window.location.href = "/main";
+          		  if(data == '사용자가 없습니다.' || data == '패스워드가 다릅니다'){
+                        alert(data);
+                    }
+                    else {
+						console.log('우리의 토큰', data);
+	    				sessionStorage.setItem('ourtoken', data);
+						window.location.href = "/main";
+					}
             	}
         	});
         })
+        
+        
     </script>
 	
 </body>
