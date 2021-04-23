@@ -23,10 +23,10 @@ app.set('view engine','ejs');
 
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
-  host     : 'us-cdbr-east-03.cleardb.com',
-  user     : 'baeb18a87136ed',
-  password : '7912102f',
-  database : 'heroku_b2e3e1681c45173'
+  host     : 'localhost',
+  user     : 'root',
+  password : 'root',
+  database : 'fintech'
 });
 
 connection.connect();
@@ -57,6 +57,7 @@ app.get('/login',function(req,res){
 })
 
 app.post('/login',function(req,res){
+  console.log(req.body);
   var userEmail = req.body.userEmail;
   var userPassword = req.body.userPassword;
   var sql = "SELECT * FROM user WHERE email = ?";
@@ -306,7 +307,7 @@ app.get('/authResult',function(req,res){
         code : authCode,
         client_id : "b6eb3d18-65e2-4929-82aa-54c4783b57fc",
         client_secret : process.env.client_secret,
-        redirect_uri : "http://localhost:8080/authResult",
+        redirect_uri : "http://localhost:3000/authResult",
         grant_type : "authorization_code"
       }
   }
@@ -322,7 +323,8 @@ app.get('/authResult',function(req,res){
       }
   })
 })
-
+app.listen(3000);
+/*
 app.listen(process.env.PORT || 8080, function(){
   console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
-});
+});*/
