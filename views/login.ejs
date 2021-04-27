@@ -117,7 +117,7 @@
 					<div class="form-row-group with-icons">
 						<div class="form-row no-padding">
 							<i class="fa fa-envelope"></i>
-							<input type="email" id="userEmail" name="aaa" class="form-element" placeholder="Email">
+							<input type="text" id="userName" name="aaa" class="form-element" placeholder="Name">
 						</div>
 						<div class="form-row no-padding">
 							<i class="fa fa-lock"></i>
@@ -158,9 +158,9 @@
 	<script src="js/global.script.js"></script>
     <script>
 	$("#loginBtn").click(function(){
-		if($("#userEmail").val()==""){
-			alert("이메일을 입력해주세요.");
-			$("#userEmail").focus();
+		if($("#userName").val()==""){
+			alert("이름을 입력해주세요.");
+			$("#userName").focus();
 			return;
 		}
 		if($("#userPassword").val()==""){
@@ -168,13 +168,13 @@
 			$("#userPassword").focus();
 			return;
 		}
-		var userEmail = $("#userEmail").val();
+		var userName = $("#userName").val();
 		var userPassword = $("#userPassword").val();
 			$.ajax({
        		   url: "/login",
        		   type: "POST",
       		    data: {
-         		   userEmail: userEmail,
+         		   userName: userName,
          		   userPassword: userPassword,
           		},
           		success: function (data) {
@@ -189,10 +189,6 @@
             	}
         	});
         })
-        
-        
     </script>
-	
 </body>
-
 </html>

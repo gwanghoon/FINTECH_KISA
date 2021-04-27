@@ -6,7 +6,7 @@ var jwt = require('jsonwebtoken');
 var auth = require('./lib/auth')
 var moment = require('moment');
 
-var companyId = "M202112062"
+var companyId = "M202112103U"
 require('dotenv').config();
 
 // json 타입에 데이터 전송을 허용한다.
@@ -15,6 +15,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 // to us static asset 
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.engine('html', require('ejs').renderFile);
 
 // views 폴더에 view 파일 존재
 app.set('views',__dirname+'/views');
@@ -50,7 +52,7 @@ app.get('/signup',function(req,res){
 })
 
 app.get('/main',function(req,res){
-  res.render('main');
+  res.render('main');  
 })
 
 app.get('/login',function(req,res){
@@ -59,10 +61,10 @@ app.get('/login',function(req,res){
 
 app.post('/login',function(req,res){
   console.log(req.body);
-  var userEmail = req.body.userEmail;
+  var userName = req.body.userName;
   var userPassword = req.body.userPassword;
-  var sql = "SELECT * FROM user WHERE email = ?";
-  connection.query(sql, [userEmail], function(err, result){
+  var sql = "SELECT * FROM user WHERE name = ?";
+  connection.query(sql, [userName], function(err, result){
       if(err){
           console.error(err);
           res.json(0);
@@ -70,7 +72,7 @@ app.post('/login',function(req,res){
       }
       else {
           if(result.length == 0){
-	 		//res.json('사용자가 없습니다.');
+	 		 
              res.json(3);
           }
           else {
@@ -80,7 +82,7 @@ app.post('/login',function(req,res){
                   jwt.sign(
                     {
                         userId : result[0].id,
-                        userEmail : result[0].email
+                        userName : result[0].name
                     },
                     tokenKey,
                     {
@@ -238,9 +240,13 @@ app.post('/balance', auth, function(req,res){
   })
 })
 
-app.post('/transactionList', auth, function(req,res){
+app.get('/transaction',function(req,res){
+  res.render('transaction');  
+})
+
+app.post('/transaction', auth, function(req,res){
   var user = req.decoded;
-  var countnum = Math.floor(Math.random() * 1000000000) + 1;
+  var countnum = Math.floor(Math.random() * 1000000000);
   var transId = companyId + countnum;
   var sql = "SELECT * FROM user WHERE id = ?";
   var transdtime = moment(new Date()).format('YYYYMMDDhhmmss');
@@ -259,8 +265,8 @@ app.post('/transactionList', auth, function(req,res){
                 fintech_use_num : req.body.fin_use_num,
                 inquiry_type : "A",
                 inquiry_base : "D",
-                from_date : "20160404", 
-                to_date : "20160405",
+                from_date : "20190404", 
+                to_date : "20210426",
                 sort_order : "D",
                 tran_dtime : transdtime
               }
@@ -311,9 +317,9 @@ app.get('/authResult',function(req,res){
       },
       form : {
         code : authCode,
-        client_id : "b6eb3d18-65e2-4929-82aa-54c4783b57fc",
+        client_id : "70aac4fd-e3cd-420c-81c3-322b4fbb797c",
         client_secret : process.env.client_secret,
-        redirect_uri : "http://localhost:3000/authResult",
+        redirect_uri : "http://localhost/authResult",
         grant_type : "authorization_code"
       }
   }
@@ -329,8 +335,14 @@ app.get('/authResult',function(req,res){
       }
   })
 })
-app.listen(3000);
-/*
-app.listen(process.env.PORT || 8080, function(){
+
+
+
+
+
+
+
+
+app.listen(process.env.PORT || 3000, function(){
   console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
-});*/
+});

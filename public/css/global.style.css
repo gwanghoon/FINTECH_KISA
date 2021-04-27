@@ -302,6 +302,11 @@ nav.menu ul.main-menu>li li a{
 .w-text{
 	color: #fff !important
 }
+.w-text-right{
+	float: right;
+	margin: 20px 30px 0 0;
+	color: #fff !important	
+}
 .g-text{
     color: #ede6e6 !important;
 }

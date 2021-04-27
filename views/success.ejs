@@ -27,10 +27,26 @@
   		<a href="signup">가입페이지</a> <br><br>
   		
   		<a href="login">로그인페이지</a> <br> <br>
+  		
+  		<a href="#" onclick="callAccount();">등록계좌조회</a> <br> <br>
   		  		
   		===로그인후 가능 페이지=== <br><br><br>
   		<a href="main">메인페이지</a> <br>
-  		</center> 		
-  		
+  		</center>  		
   </body>
+  
+  <script>
+  function callAccount(){
+        var apiKey = "70aac4fd-e3cd-420c-81c3-322b4fbb797c"
+        //#자기 키로 변경
+        var tmpWindow = window.open("about:blank");
+        tmpWindow.location = "https://testapi.openbanking.or.kr/oauth/2.0/authorize_account?"+
+        "response_type=code&"+
+        "client_id="+apiKey+"&"+
+        "redirect_uri=http://localhost/authResult&"+
+        "scope=login inquiry transfer&"+
+        "state=12345678901234567890123456789012&"+
+        "auth_type=0"
+      };  
+  </script>  
 </html>

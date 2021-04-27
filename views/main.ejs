@@ -344,6 +344,9 @@
           <div class="dash-balance">
             <div class="dash-content relative">
               <h3 class="w-text">Dashboard</h3>
+              
+              <a href="#" onclick="LogoutFunc();"><h3 class="w-text-right">로그아웃</h3></a>               
+              
               <div class="notification">
                 <a href=""><i class="fa fa-plus"></i></a>
               </div>
@@ -410,12 +413,13 @@
     <script src="js/app-charts.js"></script>
     <script src="js/global.script.js"></script>
 
-    <script>
-      var jwtToken = sessionStorage.getItem("ourtoken");
-      if (jwtToken == "") {
-        alert("로그인해주세요");
-        window.location.href = "/login";
-      }
+    <script>   
+      	var jwtToken = sessionStorage.getItem('ourtoken');
+        console.log('토큰값',jwtToken);
+        if(jwtToken == ""){
+            alert("로그인해주세요")
+            window.location.href = '/login'
+        }
       fetchUserData();
       function fetchUserData() {
         $.ajax({
@@ -425,30 +429,29 @@
             ourtoken: jwtToken,
           },
           success: function (data) {
+            console.log('data.res_list', data.res_list);
             for (var i = 0; i < data.res_list.length; i++) {
               $("#cardList").append(
                 '<div class="balance-card mb-15">' +
-                  i +
+                  '번호: '+ i +
                   '<div class="d-flex align-items-center">' +
-                  '<div class="d-flex flex-grow">' +
-                  '<div class="mr-auto">' +
-                  '<h1 class="b-val">' +
-                  data.res_list[i].account_alias +
-                  "</h1>" +
-                  '<p class="g-text mb-10">' +
-                  data.res_list[i].fintech_use_num +
-                  "</p>" +
-                  "</div>" +
-                  '<div class="ml-auto align-self-end">' +
-                  '<a href="/balance?fin_use_num=' +
-                  data.res_list[i].fintech_use_num +
-                  '">잔액조회</a>' +
-                  "||||" +
-                  '<a href="/qrcode?fin_use_num=' +
-                  data.res_list[i].fintech_use_num +
-                  '">QR생성</a>' +
-                  "</div>" +
-                  "</div>" +
+	                  '<div class="d-flex flex-grow">' +
+		                  '<div class="mr-auto">' +
+			                  '<h1 class="b-val">' +
+			                  	'계좌명칭: '+ data.res_list[i].account_alias +
+			                  "</h1>" +
+			                  '<p class="g-text mb-10">' +
+			                  	'핀테크계좌번호: '+ data.res_list[i].fintech_use_num +
+			                  "</p>" +
+			                  "</div>" +
+			                  '<div class="ml-auto align-self-end">' +
+			                  '<a href="/balance?fin_use_num=' + data.res_list[i].fintech_use_num +'">잔액조회</a>' +               
+			                  "|||"+
+			                  '<a href="/transaction?fin_use_num='+ data.res_list[i].fintech_use_num+'">거래내역 조회</a>'+
+			                  "|||"+
+			                  '<a href="/qrcode?fin_use_num=' + data.res_list[i].fintech_use_num +'">QR생성</a>' +
+		                  "</div>" +
+	                  "</div>" +
                   "</div>" +
                   "</div>"
               );
@@ -456,6 +459,12 @@
           },
         });
       }
+      
+    function LogoutFunc(){
+	  sessionStorage.clear(); // 모든 데이터 삭제
+	  window.location.href = '/';	  
+	  };        
+      
     </script>
   </body>
 </html>
