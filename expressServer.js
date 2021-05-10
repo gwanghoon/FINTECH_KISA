@@ -6,6 +6,8 @@ var jwt = require('jsonwebtoken');
 var auth = require('./lib/auth')
 var moment = require('moment');
 
+var session = require('express-session');               
+
 var companyId = "M202112103U"
 require('dotenv').config();
 
@@ -60,24 +62,27 @@ app.get('/login',function(req,res){
 })
 
 app.post('/login',function(req,res){
-  console.log(req.body);
   var userName = req.body.userName;
   var userPassword = req.body.userPassword;
+
   var sql = "SELECT * FROM user WHERE name = ?";
   connection.query(sql, [userName], function(err, result){
       if(err){
           console.error(err);
-          res.json(0);
+          //res.json(0);
           throw err;
       }
       else {
           if(result.length == 0){
-	 		 
-             res.json(3);
+	 		 res.json('사용자가 없습니다.')
+             //res.json(3);
           }
           else {
+              console.log(result[0].accesstoken);
               var dbPassword = result[0].password;
+			  console.log('database password : ', dbPassword);
               if(dbPassword == userPassword){
+				  console.log('login 성공!');
                   var tokenKey = process.env.token_key
                   jwt.sign(
                     {
@@ -91,7 +96,7 @@ app.post('/login',function(req,res){
                         subject : 'user.login.info'
                     },
                     function(err, token){
-                        console.log('로그인 성공', token)
+                        console.log('우리가 발급한 토큰 : ',token);
                         res.json(token)
                     }
                   )            
@@ -335,12 +340,6 @@ app.get('/authResult',function(req,res){
       }
   })
 })
-
-
-
-
-
-
 
 
 app.listen(process.env.PORT || 3000, function(){

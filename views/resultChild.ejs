@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <body>
 성공되었을때 발급되는 토큰:<br>
-<div id="accessToken"><%=data.access_token%></div>
+<div id="accessToken">
+	<%=data.access_token%>
+</div>
+
 성공되었을때 발급되는 재갱신 토큰:<br>
-<div id="refreshToken"><%=data.refresh_token%></div>
+<div id="refreshToken">
+	<%=data.refresh_token%>
+</div>
+
 성공되었을때 확인되는 유저일련번호:<br>
-<div id="usenum"><%=data.user_seq_no%></div>
+<div id="usenum">
+	<%=data.user_seq_no%>
+</div>
 </body>
 <script>
-   opener.document.getElementById("userAccessToken").value =
-       document.getElementById("accessToken").textContent;
-   opener.document.getElementById("userRefreshToken").value =
-       document.getElementById("refreshToken").textContent;
-   opener.document.getElementById("userSeqNo").value =
-       document.getElementById("usenum").textContent;
+   opener.document.getElementById("userAccessToken").value = document.getElementById("accessToken").textContent;
+   opener.document.getElementById("userRefreshToken").value = document.getElementById("refreshToken").textContent;
+   opener.document.getElementById("userSeqNo").value = document.getElementById("usenum").textContent;   
 </script>
 </html>

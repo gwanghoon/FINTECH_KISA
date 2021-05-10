@@ -227,12 +227,12 @@
         <!-- Header area start -->
         <header class="no-background">
           <!-- extra class no-background -->
-
+<!--
           <div class="search-button" data-search="open">
             <img src="img/content/notification1.png" class="not-icon1" alt="" />
             <img src="img/content/notification2.png" class="not-icon2" alt="" />
           </div>
-
+-->
           <div class="navi-menu-button">
             <em></em>
             <em></em>
@@ -413,13 +413,13 @@
     <script src="js/app-charts.js"></script>
     <script src="js/global.script.js"></script>
 
-    <script>   
+    <script>
       	var jwtToken = sessionStorage.getItem('ourtoken');
         console.log('토큰값',jwtToken);
-        if(jwtToken == ""){
+         if(jwtToken == "" || jwtToken == undefined){
             alert("로그인해주세요")
             window.location.href = '/login'
-        }
+        } 
       fetchUserData();
       function fetchUserData() {
         $.ajax({

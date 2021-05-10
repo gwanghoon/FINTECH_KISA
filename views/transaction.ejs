@@ -286,8 +286,8 @@
           fin_use_num: qs.fin_use_num,
         },
         success: function (data) {
-          console.log("해당 계좌의 잔액은 :", data.balance_amt);
-          $("#balanceAmount").text(data.balance_amt);
+          console.log("해당 계좌의 잔액은 :",  numberWithCommas(data.balance_amt));
+          $("#balanceAmount").text(numberWithCommas(data.balance_amt));
         },
       });
 
@@ -312,13 +312,18 @@
                 "<td>" + transactionElement.tran_time + "</td>" +
                 "<td>" + transactionElement.tran_type + "</td>" +
                 "<td>" + transactionElement.print_content + "</td>" +
-                "<td>" + transactionElement.tran_amt + "</td>" +
-                "<td>" + transactionElement.after_balance_amt + "</td>" +
+                "<td>" + numberWithCommas(transactionElement.tran_amt) + "</td>" +
+                "<td>" + numberWithCommas(transactionElement.after_balance_amt) + "</td>" +
                "</tr>"
             );
           }
         },
       });
+      
+      function numberWithCommas(num) {
+	    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	  } 
+      
     </script>
   </body>
 </html>
